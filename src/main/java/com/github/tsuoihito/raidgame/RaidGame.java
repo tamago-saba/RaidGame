@@ -1,6 +1,7 @@
 package com.github.tsuoihito.raidgame;
 
 import com.github.tsuoihito.raidgame.listeners.PlayerDeathListener;
+import com.github.tsuoihito.raidgame.listeners.PlayerJoinListener;
 import com.github.tsuoihito.raidgame.listeners.RaidFinishListener;
 import com.github.tsuoihito.raidgame.listeners.RaiderDamageListener;
 import com.github.tsuoihito.raidgame.objects.GameState;
@@ -42,6 +43,7 @@ public final class RaidGame extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
         getServer().getPluginManager().registerEvents(new RaidFinishListener(this), this);
         getServer().getPluginManager().registerEvents(new RaiderDamageListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
         getCommand("raidgame").setExecutor(new RGCommandExecutor(this));
 
