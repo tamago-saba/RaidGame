@@ -7,7 +7,7 @@ description: A plugin for the Raid Game event in tamago-saba.
 
 commands:
   raidgame:
-    aliases: [ rg ]
+    aliases: []
     permission: raidgame.command
 
 permissions:
