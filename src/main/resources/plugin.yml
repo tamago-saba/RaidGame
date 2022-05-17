@@ -1,0 +1,15 @@
+name: RaidGame
+version: '${project.version}'
+main: com.github.tsuoihito.raidgame.RaidGame
+api-version: 1.18
+authors: [ tsuoihito ]
+description: A plugin for the Raid Game event in tamago-saba.
+
+commands:
+  raidgame:
+    aliases: [ rg ]
+    permission: raidgame.command
+
+permissions:
+  raidgame.command:
+    default: op
