@@ -38,5 +38,7 @@ public class SBScheduler extends BukkitRunnable {
             }
         }
 
+        plugin.getGameState().getTeam().getGameResult().increaseElapsedTime();
+
     }
 }

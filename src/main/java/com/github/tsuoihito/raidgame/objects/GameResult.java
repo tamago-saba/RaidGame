@@ -41,7 +41,7 @@ public class GameResult {
         return elapsedTime;
     }
 
-    public void IncreaseElapsedTime() {
+    public void increaseElapsedTime() {
         elapsedTime ++;
     }
 

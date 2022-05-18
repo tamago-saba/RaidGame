@@ -10,7 +10,7 @@ public class MessageData {
         return getTeamResultTemplate()
                 .replace("%teamName%", team.getTeamName())
                 .replace("%deathCount%", team.getGameResult().getDeathCount().toString())
-                .replace("%elapsedTime%", team.getGameResult().getElapsedTime().toString())
+                .replace("%elapsedTime%", getHumanTime(team.getGameResult().getElapsedTime()))
                 .replace("%memberResult%", getMemberResult(team));
     }
 
@@ -21,13 +21,19 @@ public class MessageData {
     public String getTeamResultTemplate() {
         return
                 "=== %teamName% RESULT ===\n" +
-                "合計死亡回数: %deathCount%\n" +
+                "合計死亡回数: %deathCount%回\n" +
                 "経過時間: %elapsedTime%\n" +
                 "%memberResult%"
                 ;
     }
 
     public String getMemberResultTemplate() {
-        return "%member% %damageScore%";
+        return "%member% %damageScore%ダメージ";
+    }
+
+    public String getHumanTime(Integer second) {
+        return "%m%分%s%秒"
+                .replace("%m%", Integer.toString(second / 60))
+                .replace("%s%", Integer.toString(second % 60));
     }
 }
