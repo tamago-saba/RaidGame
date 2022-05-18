@@ -20,15 +20,15 @@ public class MessageData {
 
     public String getTeamResultTemplate() {
         return
-                "=== %teamName% RESULT ===\n" +
-                "合計死亡回数: %deathCount%回\n" +
-                "経過時間: %elapsedTime%\n" +
+                "§b=== §a%teamName% §bRESULT ===\n" +
+                "§e合計死亡回数: §c%deathCount%回\n" +
+                "§e経過時間: §c%elapsedTime%\n" +
                 "%memberResult%"
                 ;
     }
 
     public String getMemberResultTemplate() {
-        return "%member% %damageScore%ダメージ";
+        return "§a%member% §c%damageScore%ダメージ";
     }
 
     public String getHumanTime(Integer second) {

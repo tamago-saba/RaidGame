@@ -20,7 +20,7 @@ public class RGScoreBoard {
 
         Objective objective = scoreboard.registerNewObjective("RG", "dummy", "RG");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(team.getTeamName());
+        objective.setDisplayName("§a%teamName%".replace("%teamName%", team.getTeamName()));
 
         team.getMembers().forEach(m -> objective.getScore(m).setScore(team.getGameResult().getDamageScore().getOrDefault(m, 0)));
 
