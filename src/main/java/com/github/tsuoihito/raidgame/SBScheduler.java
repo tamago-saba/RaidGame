@@ -21,9 +21,10 @@ public class SBScheduler extends BukkitRunnable {
                 for (Team team : plugin.getTeams()) {
                     if (team.getMembers().stream().anyMatch(m -> m.equalsIgnoreCase(player.getName()))) {
                         player.setScoreboard(plugin.getRgScoreBoard().getScoreBoard(team));
-                        break;
+                        return;
                     }
                 }
+                player.setScoreboard(plugin.getRgScoreBoard().getEmptyScoreboard());
             }
 
             return;
