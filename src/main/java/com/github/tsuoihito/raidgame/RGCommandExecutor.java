@@ -71,8 +71,6 @@ public class RGCommandExecutor implements TabExecutor {
                 }
             }
 
-            new SBScheduler(plugin).runTaskTimer(plugin, 0, 20);
-
         }
 
         if (args[0].equalsIgnoreCase("stop")) {

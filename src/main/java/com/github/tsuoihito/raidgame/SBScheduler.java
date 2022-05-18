@@ -1,5 +1,7 @@
 package com.github.tsuoihito.raidgame;
 
+import com.github.tsuoihito.raidgame.objects.Team;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class SBScheduler extends BukkitRunnable {
@@ -14,12 +16,26 @@ public class SBScheduler extends BukkitRunnable {
     public void run() {
 
         if (!plugin.isInGame()) {
-            plugin.getRgScoreBoard().removeScoreBoard();
-            cancel();
+
+            for (Player player : plugin.getServer().getOnlinePlayers()) {
+                for (Team team : plugin.getTeams()) {
+                    if (team.getMembers().stream().anyMatch(m -> m.equalsIgnoreCase(player.getName()))) {
+                        player.setScoreboard(plugin.getRgScoreBoard().getScoreBoard(team));
+                        break;
+                    }
+                }
+            }
+
             return;
         }
 
-        plugin.getRgScoreBoard().loadScoreBoard();
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            if (plugin.getGameState().getTeam().getMembers().stream().anyMatch(m -> m.equalsIgnoreCase(player.getName()))) {
+                player.setScoreboard(plugin.getRgScoreBoard().getScoreBoard(plugin.getGameState().getTeam()));
+            } else {
+                player.setScoreboard(plugin.getRgScoreBoard().getEmptyScoreboard());
+            }
+        }
 
     }
 }

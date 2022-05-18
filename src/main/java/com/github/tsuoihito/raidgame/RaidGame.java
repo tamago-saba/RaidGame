@@ -30,6 +30,7 @@ public final class RaidGame extends JavaPlugin {
         inGame = false;
 
         register();
+        runScheduler();
 
     }
 
@@ -47,6 +48,10 @@ public final class RaidGame extends JavaPlugin {
 
         getCommand("raidgame").setExecutor(new RGCommandExecutor(this));
 
+    }
+
+    private void runScheduler() {
+        new SBScheduler(this).runTaskTimer(this, 0, 20);
     }
 
     public void saveGameResult() {
