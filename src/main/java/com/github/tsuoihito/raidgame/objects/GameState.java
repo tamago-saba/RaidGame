@@ -6,6 +6,7 @@ public class GameState {
 
     public GameState(Team team) {
         this.team = team;
+        this.team.clearGameResult();
     }
 
     public Team getTeam() {

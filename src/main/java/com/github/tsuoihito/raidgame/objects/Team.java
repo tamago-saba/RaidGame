@@ -9,7 +9,7 @@ public class Team {
 
     public final String teamName;
     public final List<String> members;
-    public final GameResult gameResult;
+    public GameResult gameResult;
 
     public Team(String teamName) {
         this.teamName = teamName;
@@ -35,6 +35,10 @@ public class Team {
 
     public GameResult getGameResult() {
         return gameResult;
+    }
+
+    public void clearGameResult() {
+        gameResult = new GameResult();
     }
 
 }
