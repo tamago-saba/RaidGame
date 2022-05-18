@@ -28,7 +28,6 @@ public class RaidFinishListener implements Listener {
 
         for (Player player : plugin.getServer().getOnlinePlayers()) {
 
-            player.sendTitle("You win!", "", 20, 60, 20);
             player.sendMessage(plugin.getMessageData().getTeamResult(plugin.gameState.getTeam()));
 
             plugin.getRgBase().ifPresent(player::teleport);
