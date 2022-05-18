@@ -6,6 +6,7 @@ import com.github.tsuoihito.raidgame.listeners.RaidFinishListener;
 import com.github.tsuoihito.raidgame.listeners.RaiderDamageListener;
 import com.github.tsuoihito.raidgame.objects.GameState;
 import com.github.tsuoihito.raidgame.objects.Team;
+import com.github.tsuoihito.raidgame.utils.MessageData;
 import com.github.tsuoihito.raidgame.utils.RGScoreBoard;
 import com.github.tsuoihito.raidgame.utils.TeamManager;
 import org.bukkit.Location;
@@ -23,6 +24,7 @@ public final class RaidGame extends JavaPlugin {
     public final List<Team> teams = new ArrayList<>();
     public final TeamManager teamManager = new TeamManager(this);
     public final RGScoreBoard rgScoreBoard = new RGScoreBoard(this);
+    public final MessageData messageData = new MessageData();
 
     @Override
     public void onEnable() {
@@ -94,5 +96,9 @@ public final class RaidGame extends JavaPlugin {
 
     public RGScoreBoard getRgScoreBoard() {
         return rgScoreBoard;
+    }
+
+    public MessageData getMessageData() {
+        return messageData;
     }
 }

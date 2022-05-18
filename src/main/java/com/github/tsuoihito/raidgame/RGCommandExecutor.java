@@ -133,7 +133,17 @@ public class RGCommandExecutor implements TabExecutor {
                 return true;
             }
 
-            plugin.getTeamManager().getTeam(args[1]).ifPresent(value -> sender.sendMessage(value.getMembers().toString()));
+            plugin.getTeamManager().getTeam(args[1]).ifPresent(t -> sender.sendMessage(t.getMembers().toString()));
+
+        }
+
+        if (args[0].equalsIgnoreCase("showresult")) {
+
+            if (args.length < 2) {
+                return true;
+            }
+
+            plugin.getTeamManager().getTeam(args[1]).ifPresent(t -> sender.sendMessage(plugin.getMessageData().getTeamResult(t)));
 
         }
 
