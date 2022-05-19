@@ -2,9 +2,31 @@ package com.github.tsuoihito.raidgame.utils;
 
 import com.github.tsuoihito.raidgame.objects.GameResult;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MessageData {
+
+    public String getTotalResultMessage(List<GameResult> gameResults) {
+        int i = 0;
+        StringBuilder totalTeamResultMessage = new StringBuilder();
+        for (GameResult gameResult : gameResults) {
+            i ++;
+            totalTeamResultMessage.append(getTotalTeamResultTemplate().replace("%rank%", Integer.toString(i)).replace("%teamName%", gameResult.getTeamName())).append("\n");
+        }
+        return getTotalResultTemplate().replace("%teamResult%", totalTeamResultMessage.toString().trim());
+    }
+
+    private String getTotalTeamResultTemplate() {
+        return "§e%rank%位: §a%teamName%";
+    }
+
+    private String getTotalResultTemplate() {
+        return
+                "§b=== TOTAL RESULT ===\n" +
+                "%teamResult%"
+                ;
+    }
 
     public String getTeamResultMessage(GameResult gameResult) {
         return getTeamResultTemplate()
@@ -36,4 +58,5 @@ public class MessageData {
                 .replace("%m%", Integer.toString(second / 60))
                 .replace("%s%", Integer.toString(second % 60));
     }
+
 }

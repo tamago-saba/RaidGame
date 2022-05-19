@@ -142,6 +142,12 @@ public class RGCommandExecutor implements TabExecutor {
 
         }
 
+        if (args[0].equalsIgnoreCase("showtotalresult")) {
+
+            sender.sendMessage(plugin.getMessageData().getTotalResultMessage(plugin.getGameResultManager().getSortedGameResults()));
+
+        }
+
         return true;
 
     }
