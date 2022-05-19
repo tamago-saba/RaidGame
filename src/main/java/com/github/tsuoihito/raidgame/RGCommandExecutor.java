@@ -148,6 +148,12 @@ public class RGCommandExecutor implements TabExecutor {
 
         }
 
+        if (args[0].equalsIgnoreCase("result")) {
+
+            plugin.getServer().getOnlinePlayers().forEach(p -> p.sendMessage(plugin.getMessageData().getTotalResultMessage(plugin.getGameResultManager().getSortedGameResults())));
+
+        }
+
         return true;
 
     }
