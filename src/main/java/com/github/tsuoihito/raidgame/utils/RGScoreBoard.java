@@ -3,7 +3,10 @@ package com.github.tsuoihito.raidgame.utils;
 
 import com.github.tsuoihito.raidgame.RaidGame;
 import com.github.tsuoihito.raidgame.objects.Team;
-import org.bukkit.scoreboard.*;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 public class RGScoreBoard {
 
@@ -13,7 +16,6 @@ public class RGScoreBoard {
         scoreboardManager = plugin.getServer().getScoreboardManager();
     }
 
-    // Only during a game
     public Scoreboard getScoreBoard(Team team) {
 
         Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
@@ -22,7 +24,7 @@ public class RGScoreBoard {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName("§a%teamName%".replace("%teamName%", team.getTeamName()));
 
-        team.getMembers().forEach(m -> objective.getScore(m).setScore(team.getGameResult().getDamageScore().getOrDefault(m, 0)));
+        team.getMembers().forEach(m -> objective.getScore(m).setScore(0));
 
         return scoreboard;
 

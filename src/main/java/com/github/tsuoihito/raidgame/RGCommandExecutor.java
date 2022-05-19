@@ -1,7 +1,5 @@
 package com.github.tsuoihito.raidgame;
 
-import com.github.tsuoihito.raidgame.objects.GameState;
-import com.github.tsuoihito.raidgame.objects.Team;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,7 +11,6 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RGCommandExecutor implements TabExecutor {
 
@@ -54,28 +51,26 @@ public class RGCommandExecutor implements TabExecutor {
                 return true;
             }
 
-            plugin.setGameState(new GameState(plugin.getTeamManager().getTeam(args[1]).get()));
-            plugin.setInGame(true);
+            plugin.startGame(args[1]);
 
             for (Player player : plugin.getServer().getOnlinePlayers()) {
-                if (plugin.getGameState().getTeam().getMembers().stream().anyMatch(player.getName()::equalsIgnoreCase)) {
+
+                if (plugin.getTeamManager().isNameInTeam(player.getName(), args[1])) {
                     player.setGameMode(GameMode.ADVENTURE);
                     player.teleport(plugin.getRgBase().get());
                     player.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN, 100, 5));
-                }
-            }
-
-            for (Player player : plugin.getServer().getOnlinePlayers()) {
-                if (plugin.getGameState().getTeam().getMembers().stream().noneMatch(player.getName()::equalsIgnoreCase)) {
+                } else {
                     player.setGameMode(GameMode.SPECTATOR);
                 }
+
             }
 
         }
 
         if (args[0].equalsIgnoreCase("stop")) {
 
-            plugin.setInGame(false);
+            plugin.stopGame();
+            plugin.getServer().getOnlinePlayers().forEach(p -> p.setGameMode(GameMode.SURVIVAL));
 
         }
 
@@ -99,7 +94,7 @@ public class RGCommandExecutor implements TabExecutor {
 
         if (args[0].equalsIgnoreCase("showteams")) {
 
-            sender.sendMessage(plugin.getTeams().stream().map(Team::getTeamName).collect(Collectors.toList()).toString());
+            sender.sendMessage(plugin.getTeamManager().getTeamNameList().toString());
 
         }
 
@@ -143,7 +138,7 @@ public class RGCommandExecutor implements TabExecutor {
                 return true;
             }
 
-            plugin.getTeamManager().getTeam(args[1]).ifPresent(t -> sender.sendMessage(plugin.getMessageData().getTeamResult(t)));
+            plugin.getGameResultManager().getGameResult(args[1]).ifPresent(g -> sender.sendMessage(plugin.getMessageData().getTeamResultMessage(g)));
 
         }
 

@@ -5,12 +5,14 @@ import java.util.Map;
 
 public class GameResult {
 
+    public String teamName;
     public Map<String, Integer> damageScore;
     public Integer deathCount;
     public Integer elapsedTime;
     public boolean win;
 
-    public GameResult() {
+    public GameResult(String teamName) {
+        this.teamName = teamName;
         damageScore = new HashMap<>();
         deathCount = 0;
         elapsedTime = 0;
@@ -23,6 +25,10 @@ public class GameResult {
             return;
         }
         damageScore.put(member, damageScore.get(member) + additionalDamageScore);
+    }
+
+    public String getTeamName() {
+        return teamName;
     }
 
     public Map<String, Integer> getDamageScore() {

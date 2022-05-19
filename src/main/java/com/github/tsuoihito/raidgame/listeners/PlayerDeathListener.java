@@ -21,11 +21,11 @@ public class PlayerDeathListener implements Listener {
             return;
         }
 
-        if (plugin.getGameState().getTeam().getMembers().stream().noneMatch(m -> m.equalsIgnoreCase(e.getEntity().getName()))) {
+        if (!plugin.getGameResultManager().isNameNowInGame(e.getEntity().getName())) {
             return;
         }
 
-        plugin.getGameState().getTeam().getGameResult().increaseDeathCount();
+        plugin.getNowGameResult().increaseDeathCount();
 
     }
 }

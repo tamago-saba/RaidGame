@@ -24,19 +24,19 @@ public class RaidFinishListener implements Listener {
             return;
         }
 
-        plugin.getGameState().getTeam().getGameResult().setWin(true);
+        plugin.getNowGameResult().setWin(true);
 
         for (Player player : plugin.getServer().getOnlinePlayers()) {
 
-            player.sendMessage(plugin.getMessageData().getTeamResult(plugin.gameState.getTeam()));
+            player.sendMessage(plugin.getMessageData().getTeamResultMessage(plugin.getNowGameResult()));
 
             plugin.getRgBase().ifPresent(player::teleport);
             player.setGameMode(GameMode.SURVIVAL);
 
         }
 
-        plugin.setInGame(false);
         plugin.saveGameResult();
+        plugin.stopGame();
 
     }
 }

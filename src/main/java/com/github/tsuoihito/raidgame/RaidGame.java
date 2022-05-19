@@ -4,8 +4,9 @@ import com.github.tsuoihito.raidgame.listeners.PlayerDeathListener;
 import com.github.tsuoihito.raidgame.listeners.PlayerJoinListener;
 import com.github.tsuoihito.raidgame.listeners.RaidFinishListener;
 import com.github.tsuoihito.raidgame.listeners.RaiderDamageListener;
-import com.github.tsuoihito.raidgame.objects.GameState;
+import com.github.tsuoihito.raidgame.objects.GameResult;
 import com.github.tsuoihito.raidgame.objects.Team;
+import com.github.tsuoihito.raidgame.utils.GameResultManager;
 import com.github.tsuoihito.raidgame.utils.MessageData;
 import com.github.tsuoihito.raidgame.utils.RGScoreBoard;
 import com.github.tsuoihito.raidgame.utils.TeamManager;
@@ -18,18 +19,19 @@ import java.util.Optional;
 
 public final class RaidGame extends JavaPlugin {
 
-    public boolean inGame;
     public Location rgBase;
-    public GameState gameState;
+
+    public GameResult nowGameResult = null;
     public final List<Team> teams = new ArrayList<>();
+    public final List<GameResult> gameResults = new ArrayList<>();
+
     public final TeamManager teamManager = new TeamManager(this);
+    public final GameResultManager gameResultManager = new GameResultManager(this);
     public final RGScoreBoard rgScoreBoard = new RGScoreBoard(this);
     public final MessageData messageData = new MessageData();
 
     @Override
     public void onEnable() {
-
-        inGame = false;
 
         register();
         runScheduler();
@@ -57,17 +59,9 @@ public final class RaidGame extends JavaPlugin {
     }
 
     public void saveGameResult() {
-        if (teams.removeIf(t -> t.getTeamName().equalsIgnoreCase(gameState.getTeam().getTeamName()))) {
-            teams.add(gameState.getTeam());
+        if (nowGameResult != null) {
+            gameResults.add(nowGameResult);
         }
-    }
-
-    public boolean isInGame() {
-        return inGame;
-    }
-
-    public void setInGame(boolean inGame) {
-        this.inGame = inGame;
     }
 
     public Optional<Location> getRgBase() {
@@ -78,20 +72,36 @@ public final class RaidGame extends JavaPlugin {
         this.rgBase = rgBase;
     }
 
+    public GameResult getNowGameResult() {
+        return nowGameResult;
+    }
+
+    public boolean isInGame() {
+        return nowGameResult != null;
+    }
+
+    public void startGame(String teamName) {
+        nowGameResult = new GameResult(teamName);
+    }
+
+    public void stopGame() {
+        nowGameResult = null;
+    }
+
     public List<Team> getTeams() {
         return teams;
     }
 
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
     public TeamManager getTeamManager() {
         return teamManager;
+    }
+
+    public GameResultManager getGameResultManager() {
+        return gameResultManager;
+    }
+
+    public List<GameResult> getGameResults() {
+        return gameResults;
     }
 
     public RGScoreBoard getRgScoreBoard() {

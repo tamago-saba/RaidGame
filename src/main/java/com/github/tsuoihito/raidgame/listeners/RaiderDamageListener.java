@@ -1,7 +1,6 @@
 package com.github.tsuoihito.raidgame.listeners;
 
 import com.github.tsuoihito.raidgame.RaidGame;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Raider;
 import org.bukkit.event.EventHandler;
@@ -32,11 +31,11 @@ public class RaiderDamageListener implements Listener {
             return;
         }
 
-        if (plugin.getGameState().getTeam().getMembers().stream().noneMatch(e.getDamager().getName() :: equalsIgnoreCase)) {
+        if (!plugin.getGameResultManager().isNameNowInGame(e.getDamager().getName())) {
             return;
         }
 
-        plugin.getGameState().getTeam().getGameResult().addDamageScore(e.getDamager().getName(), (int) e.getDamage());
+        plugin.getNowGameResult().addDamageScore(e.getDamager().getName(), (int) e.getDamage());
 
     }
 }

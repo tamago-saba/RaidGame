@@ -3,7 +3,10 @@ package com.github.tsuoihito.raidgame.utils;
 import com.github.tsuoihito.raidgame.RaidGame;
 import com.github.tsuoihito.raidgame.objects.Team;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 public class TeamManager {
 
@@ -22,15 +25,25 @@ public class TeamManager {
         return Optional.empty();
     }
 
-    public boolean addTeam(String teamName) {
-        if (plugin.getTeams().stream().anyMatch(t -> t.getTeamName().equalsIgnoreCase(teamName))) {
-            return false;
+    public List<String> getTeamNameList() {
+        return plugin.getTeams().stream().map(Team::getTeamName).collect(Collectors.toList());
+    }
+
+    public boolean isNameInTeam(String name, String teamName) {
+        return getTeam(teamName).isPresent() && getTeam(teamName).get().getMembers().stream().anyMatch(name::equalsIgnoreCase);
+    }
+
+    public Optional<Team> getTeamOfMember(String member) {
+        for (Team team : plugin.getTeams()) {
+            if (team.getMembers().stream().anyMatch(member::equalsIgnoreCase)) {
+                return Optional.of(team);
+            }
         }
+        return Optional.empty();
+    }
 
-        Team team = new Team(teamName);
-        plugin.getTeams().add(team);
-
-        return true;
+    public boolean addTeam(String teamName) {
+        return plugin.getTeams().stream().noneMatch(t -> t.getTeamName().equalsIgnoreCase(teamName)) && plugin.getTeams().add(new Team(teamName));
     }
 
     public boolean removeTeam(String teamName) {
@@ -38,27 +51,11 @@ public class TeamManager {
     }
 
     public boolean addTeamMember(String teamName, String member) {
-        int i = -1;
-        for (Team team : plugin.getTeams()) {
-            i ++;
-            if (team.getTeamName().equalsIgnoreCase(teamName)) {
-                plugin.getTeams().get(i).addMember(member);
-                return true;
-            }
-        }
-        return false;
+        return getTeam(teamName).isPresent() && getTeam(teamName).get().getMembers().add(member);
     }
 
     public boolean removeTeamMember(String teamName, String member) {
-        int i = -1;
-        for (Team team : plugin.getTeams()) {
-            i ++;
-            if (team.getTeamName().equalsIgnoreCase(teamName)) {
-                plugin.getTeams().get(i).removeMember(member);
-                return true;
-            }
-        }
-        return false;
+        return getTeam(teamName).isPresent() && getTeam(teamName).get().getMembers().removeIf(member::equalsIgnoreCase);
     }
 
 }

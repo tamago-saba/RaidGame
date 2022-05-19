@@ -23,12 +23,12 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
-        if (plugin.getGameState().getTeam().getMembers().stream().noneMatch(e.getPlayer().getName()::equalsIgnoreCase)) {
-            e.getPlayer().setGameMode(GameMode.SPECTATOR);
+        if (plugin.getGameResultManager().isNameNowInGame(e.getPlayer().getName())) {
+            e.getPlayer().setGameMode(GameMode.ADVENTURE);
             return;
         }
 
-        e.getPlayer().setGameMode(GameMode.ADVENTURE);
+        e.getPlayer().setGameMode(GameMode.SPECTATOR);
 
     }
 }
