@@ -25,7 +25,7 @@ public class GameResultManager {
         return Optional.empty();
     }
 
-    public boolean isNameNowInGame(String name) {
+    public boolean isNameInGame(String name) {
         return
                 plugin.isInGame() &&
                 plugin.getTeamManager().getTeamOfMember(name).isPresent() &&

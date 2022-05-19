@@ -23,7 +23,7 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
-        if (plugin.getGameResultManager().isNameNowInGame(e.getPlayer().getName())) {
+        if (plugin.getGameResultManager().isNameInGame(e.getPlayer().getName())) {
             e.getPlayer().setGameMode(GameMode.ADVENTURE);
             return;
         }

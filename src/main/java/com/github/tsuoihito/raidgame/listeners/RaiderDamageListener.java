@@ -31,7 +31,7 @@ public class RaiderDamageListener implements Listener {
             return;
         }
 
-        if (!plugin.getGameResultManager().isNameNowInGame(e.getDamager().getName())) {
+        if (!plugin.getGameResultManager().isNameInGame(e.getDamager().getName())) {
             return;
         }
 

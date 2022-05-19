@@ -21,7 +21,7 @@ public class PlayerDeathListener implements Listener {
             return;
         }
 
-        if (!plugin.getGameResultManager().isNameNowInGame(e.getEntity().getName())) {
+        if (!plugin.getGameResultManager().isNameInGame(e.getEntity().getName())) {
             return;
         }
 
