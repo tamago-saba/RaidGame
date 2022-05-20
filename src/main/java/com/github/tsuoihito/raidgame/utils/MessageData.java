@@ -8,17 +8,28 @@ import java.util.stream.Collectors;
 public class MessageData {
 
     public String getTotalResultMessage(List<GameResult> gameResults) {
+
         int i = 0;
+
         StringBuilder totalTeamResultMessage = new StringBuilder();
+
         for (GameResult gameResult : gameResults) {
             i ++;
-            totalTeamResultMessage.append(getTotalTeamResultTemplate().replace("%rank%", Integer.toString(i)).replace("%teamName%", gameResult.getTeamName())).append("\n");
+            totalTeamResultMessage.append(getTotalTeamResultTemplate()
+                    .replace("%rank%", Integer.toString(i))
+                    .replace("%teamName%", gameResult.getTeamName())
+                    .replace("%deathCount%", gameResult.getDeathCount().toString())
+                    .replace("%elapsedTime%", getHumanTime(gameResult.getElapsedTime()))).append("\n");
         }
+
         return getTotalResultTemplate().replace("%teamResult%", totalTeamResultMessage.toString().trim());
+
     }
 
     private String getTotalTeamResultTemplate() {
-        return "§e%rank%位: §a%teamName%";
+        return
+                "§e順位: §aチーム名 §c死亡回数 経過時間\n" +
+                "§e%rank%位: §a%teamName% §c%deathCount%回 %elapsedTime%";
     }
 
     private String getTotalResultTemplate() {
@@ -45,12 +56,15 @@ public class MessageData {
                 "§b=== §a%teamName% §bRESULT ===\n" +
                 "§e合計死亡回数: §c%deathCount%回\n" +
                 "§e経過時間: §c%elapsedTime%\n" +
+                "§b--- PLAYER RESULT ---" +
                 "%memberResult%"
                 ;
     }
 
     private String getMemberResultTemplate() {
-        return "§a%member% §c%damageScore%ダメージ";
+        return
+                "§aプレイヤー §c襲撃者に与えた総ダメージ\n" +
+                "§a%member% §c%damageScore%ダメージ";
     }
 
     private String getHumanTime(Integer second) {
