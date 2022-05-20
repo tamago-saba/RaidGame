@@ -25,13 +25,15 @@ public final class RaidGame extends JavaPlugin {
     public final List<Team> teams = new ArrayList<>();
     public final List<GameResult> gameResults = new ArrayList<>();
 
+    public RGScoreBoard rgScoreBoard;
     public final TeamManager teamManager = new TeamManager(this);
     public final GameResultManager gameResultManager = new GameResultManager(this);
-    public final RGScoreBoard rgScoreBoard = new RGScoreBoard(this);
     public final MessageData messageData = new MessageData();
 
     @Override
     public void onEnable() {
+
+        rgScoreBoard = new RGScoreBoard(this);
 
         register();
         runScheduler();
