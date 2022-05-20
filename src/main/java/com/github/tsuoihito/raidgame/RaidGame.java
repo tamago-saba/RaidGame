@@ -60,6 +60,7 @@ public final class RaidGame extends JavaPlugin {
 
     public void saveGameResult() {
         if (nowGameResult != null) {
+            gameResults.removeIf(g -> g.getTeamName().equalsIgnoreCase(nowGameResult.getTeamName()));
             gameResults.add(nowGameResult);
         }
     }
