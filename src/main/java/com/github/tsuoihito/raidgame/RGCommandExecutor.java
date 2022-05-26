@@ -11,6 +11,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RGCommandExecutor implements TabExecutor {
 
@@ -161,10 +163,38 @@ public class RGCommandExecutor implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
-        List<String> playerName = new ArrayList<>();
-        plugin.getServer().getOnlinePlayers().forEach(p -> playerName.add(p.getName()));
+        if (args.length == 1) {
+            return Stream.of(
+                    "setbase",
+                    "start",
+                    "stop",
+                    "createteam",
+                    "deleteteam",
+                    "showteams",
+                    "addmember",
+                    "removemember",
+                    "showmembers",
+                    "showresult",
+                    "showtotalresult",
+                    "result").filter(c -> c.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList());
+        }
 
-        return playerName;
+        if (args.length == 2) {
+            if (Stream.of("start", "deleteteam", "addmember", "removemember", "showmembers", "showresult").anyMatch(c -> c.equalsIgnoreCase(args[0]))) {
+                return plugin.getTeamManager().getTeamNameList().stream().filter(t -> t.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
+            }
+        }
+
+        if (args.length == 3) {
+            if (args[0].equalsIgnoreCase("addmember")) {
+                return plugin.getServer().getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+            }
+            if (args[0].equalsIgnoreCase("removemember")) {
+                return plugin.getTeamManager().getTeam(args[1]).isPresent() ? plugin.getTeamManager().getTeam(args[1]).get().getMembers().stream().filter(m -> m.toLowerCase().startsWith(args[2].toLowerCase())).collect(Collectors.toList()) : new ArrayList<>();
+            }
+        }
+
+        return new ArrayList<>();
 
     }
 }
