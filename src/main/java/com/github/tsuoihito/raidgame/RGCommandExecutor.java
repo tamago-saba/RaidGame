@@ -187,7 +187,7 @@ public class RGCommandExecutor implements TabExecutor {
 
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("addmember")) {
-                return plugin.getServer().getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+                return plugin.getServer().getOnlinePlayers().stream().map(Player::getName).filter(name -> !plugin.getTeamManager().getTeamOfMember(name).isPresent()).collect(Collectors.toList());
             }
             if (args[0].equalsIgnoreCase("removemember")) {
                 return plugin.getTeamManager().getTeam(args[1]).isPresent() ? plugin.getTeamManager().getTeam(args[1]).get().getMembers().stream().filter(m -> m.toLowerCase().startsWith(args[2].toLowerCase())).collect(Collectors.toList()) : new ArrayList<>();

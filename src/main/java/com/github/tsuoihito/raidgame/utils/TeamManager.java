@@ -51,7 +51,7 @@ public class TeamManager {
     }
 
     public boolean addTeamMember(String teamName, String member) {
-        return getTeam(teamName).isPresent() && getTeam(teamName).get().getMembers().add(member);
+        return getTeam(teamName).isPresent() && !getTeamOfMember(member).isPresent() && getTeam(teamName).get().getMembers().add(member);
     }
 
     public boolean removeTeamMember(String teamName, String member) {
