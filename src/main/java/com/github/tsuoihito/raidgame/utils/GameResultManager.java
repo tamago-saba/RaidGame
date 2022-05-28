@@ -36,4 +36,8 @@ public class GameResultManager {
         return plugin.gameResults.stream().filter(GameResult::isWin).sorted(Comparator.comparing(GameResult::getDeathCount).thenComparing(GameResult::getElapsedTime)).collect(Collectors.toList());
     }
 
+    public boolean removeGameResult(String teamName) {
+        return plugin.getGameResults().removeIf(t -> t.getTeamName().equalsIgnoreCase(teamName));
+    }
+
 }

@@ -92,6 +92,8 @@ public class RGCommandExecutor implements TabExecutor {
             }
 
             plugin.getTeamManager().removeTeam(args[1]);
+            plugin.getGameResultManager().removeGameResult(args[1]);
+
         }
 
         if (args[0].equalsIgnoreCase("showteams")) {
