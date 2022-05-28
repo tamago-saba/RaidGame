@@ -56,7 +56,7 @@ public class MessageData {
                 "§b=== §a%teamName% §bRESULT ===\n" +
                 "§e合計死亡回数: §c%deathCount%回\n" +
                 "§e経過時間: §c%elapsedTime%\n" +
-                "§b--- PLAYER RESULT ---" +
+                "§b--- PLAYER RESULT ---\n" +
                 "%memberResult%"
                 ;
     }
